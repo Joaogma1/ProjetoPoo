@@ -6,6 +6,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -32,11 +33,13 @@ public class PostsController {
 	@Autowired
 	private BebidaRepository bebidaRepository;
 	
+	@CrossOrigin()
+	
 	@GetMapping("/posts")
 	public List<Post> get() {
 		return postRepository.findAll();
 	}
-	
+	@CrossOrigin()
 	@GetMapping("/posts/{id}")
 	public Post get(@PathVariable long id) throws NotFoundException {
 		Optional<Post> postBuscado = postRepository.findById(id);
@@ -46,12 +49,12 @@ public class PostsController {
 
 		return postBuscado.get();
 	}
-	
+	@CrossOrigin()
 	@DeleteMapping("/posts/{id}")
 	public void deleteStudent(@PathVariable long id) {
 		postRepository.deleteById(id);
 	}
-	
+	@CrossOrigin()
 	@PutMapping("/posts/{id}")
 	public ResponseEntity<Object> update(@RequestBody Post post, @PathVariable long id) {
 
@@ -66,7 +69,7 @@ public class PostsController {
 
 		return ResponseEntity.noContent().build();
 	}
-	
+	@CrossOrigin()
 	@PostMapping("/posts")
 	public ResponseEntity<Object> cadastrarPost(@RequestBody Post data) {
 

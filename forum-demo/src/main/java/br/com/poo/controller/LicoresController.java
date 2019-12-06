@@ -6,6 +6,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,11 +27,13 @@ public class LicoresController {
 	@Autowired
 	private LicorRepository licorRepository;
 	
+	@CrossOrigin()
 	@GetMapping("/licores")
 	public List<Licor> get() {
 		return licorRepository.findAll();
 	}
 	
+	@CrossOrigin()
 	@PutMapping("/licores/{id}")
 	public ResponseEntity<Object> update(@RequestBody Licor licor, @PathVariable long id) {
 
@@ -45,7 +48,7 @@ public class LicoresController {
 
 		return ResponseEntity.noContent().build();
 	}
-	
+	@CrossOrigin()
 	@PostMapping("/licores")
 	public ResponseEntity<Object> cadastrarLicor(@RequestBody Licor data) {
 		

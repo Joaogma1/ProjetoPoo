@@ -36,7 +36,7 @@ public class Comentario {
 	
 	@ManyToOne
 	@JoinColumn
-	@JsonIgnore
+	@JsonIgnore()
 	private Post post;
 
 	public Long getIdPost() {

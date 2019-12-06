@@ -6,6 +6,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,12 +26,12 @@ public class WhiskyController {
 	
 	@Autowired
 	private WhiskyRepository whiskyRepository;
-	
+	@CrossOrigin()
 	@GetMapping("/Whisky")
 	public List<Whisky> get() {
 		return whiskyRepository.findAll();
 	}
-	
+	@CrossOrigin()
 	@PutMapping("/Whisky/{id}")
 	public ResponseEntity<Object> update(@RequestBody Whisky whisky, @PathVariable long id) {
 
@@ -45,7 +46,7 @@ public class WhiskyController {
 
 		return ResponseEntity.noContent().build();
 	}
-	
+	@CrossOrigin()
 	@PostMapping("/Whisky")
 	public ResponseEntity<Object> cadastrarVodka(@RequestBody Whisky data) {
 		
