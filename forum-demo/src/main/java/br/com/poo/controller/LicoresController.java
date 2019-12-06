@@ -15,48 +15,46 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import br.com.poo.model.Vinho;
-import br.com.poo.repository.VinhoRepository;
-
+import br.com.poo.model.Licor;
+import br.com.poo.repository.LicorRepository;
 
 
 @RestController
 @RequestMapping("/api")
-public class VinhoController {
-
-	@Autowired
-	private VinhoRepository vinhoRepository;
+public class LicoresController {
 	
-	@GetMapping("/vinhos")
-	public List<Vinho> get() {
-		return vinhoRepository.findAll();
+	@Autowired
+	private LicorRepository licorRepository;
+	
+	@GetMapping("/licores")
+	public List<Licor> get() {
+		return licorRepository.findAll();
 	}
 	
-	@PutMapping("/vinhos/{id}")
-	public ResponseEntity<Object> update(@RequestBody Vinho vinho, @PathVariable long id) {
+	@PutMapping("/licores/{id}")
+	public ResponseEntity<Object> update(@RequestBody Licor licor, @PathVariable long id) {
 
-		Optional<Vinho> vin =vinhoRepository.findById(id);
+		Optional<Licor> studentOptional = licorRepository.findById(id);
 
-		if (!vin.isPresent())
+		if (!studentOptional.isPresent())
 			return ResponseEntity.notFound().build();
-		else {
-		Vinho vinhoModificado = vin.get();
+
+		licor.setId(id);
 		
-		vinhoModificado.setId(id);
-		vinhoRepository.save(vinhoModificado);
+		licorRepository.save(licor);
 
 		return ResponseEntity.noContent().build();
-		}
 	}
 	
-	@PostMapping("/vinhos")
-	public ResponseEntity<Object> cadastrarVinho(@RequestBody Vinho data) {
+	@PostMapping("/licores")
+	public ResponseEntity<Object> cadastrarLicor(@RequestBody Licor data) {
 		
-		Vinho savedVinho = vinhoRepository.save(data);
+		Licor savedLicor = licorRepository.save(data);
 
 		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
-				.buildAndExpand(savedVinho.getId()).toUri();
+				.buildAndExpand(savedLicor.getId()).toUri();
 
 		return ResponseEntity.created(location).build();
 	}
+
 }

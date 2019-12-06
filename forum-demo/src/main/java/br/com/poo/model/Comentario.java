@@ -6,6 +6,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Transient;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -23,8 +28,24 @@ public class Comentario {
 	private Long id;
 
 	private String descricao;
+	
+	@Transient
+	private Long idPost;
 
 	private LocalDate data;
+	
+	@ManyToOne
+	@JoinColumn
+	@JsonIgnore
+	private Post post;
+
+	public Long getIdPost() {
+		return idPost;
+	}
+
+	public void setIdPost(Long idPost) {
+		this.idPost = idPost;
+	}
 
 	public Long getId() {
 		return id;
@@ -48,6 +69,14 @@ public class Comentario {
 
 	public void setData(LocalDate data) {
 		this.data = data;
+	}
+
+	public Post getPost() {
+		return post;
+	}
+
+	public void setPost(Post post) {
+		this.post = post;
 	}
 
 	

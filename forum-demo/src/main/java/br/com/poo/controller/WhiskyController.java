@@ -15,47 +15,44 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import br.com.poo.model.Vinho;
-import br.com.poo.repository.VinhoRepository;
-
-
+import br.com.poo.model.Vodka;
+import br.com.poo.model.Whisky;
+import br.com.poo.repository.WhiskyRepository;
 
 @RestController
 @RequestMapping("/api")
-public class VinhoController {
-
-	@Autowired
-	private VinhoRepository vinhoRepository;
+public class WhiskyController {
 	
-	@GetMapping("/vinhos")
-	public List<Vinho> get() {
-		return vinhoRepository.findAll();
+	@Autowired
+	private WhiskyRepository whiskyRepository;
+	
+	@GetMapping("/Whisky")
+	public List<Whisky> get() {
+		return whiskyRepository.findAll();
 	}
 	
-	@PutMapping("/vinhos/{id}")
-	public ResponseEntity<Object> update(@RequestBody Vinho vinho, @PathVariable long id) {
+	@PutMapping("/Whisky/{id}")
+	public ResponseEntity<Object> update(@RequestBody Whisky whisky, @PathVariable long id) {
 
-		Optional<Vinho> vin =vinhoRepository.findById(id);
+		Optional<Whisky> whiskyOptional = whiskyRepository.findById(id);
 
-		if (!vin.isPresent())
+		if (!whiskyOptional.isPresent())
 			return ResponseEntity.notFound().build();
-		else {
-		Vinho vinhoModificado = vin.get();
+
+		whisky.setId(id);
 		
-		vinhoModificado.setId(id);
-		vinhoRepository.save(vinhoModificado);
+		whiskyRepository.save(whisky);
 
 		return ResponseEntity.noContent().build();
-		}
 	}
 	
-	@PostMapping("/vinhos")
-	public ResponseEntity<Object> cadastrarVinho(@RequestBody Vinho data) {
+	@PostMapping("/Whisky")
+	public ResponseEntity<Object> cadastrarVodka(@RequestBody Whisky data) {
 		
-		Vinho savedVinho = vinhoRepository.save(data);
+		Whisky savedWhisky = whiskyRepository.save(data);
 
 		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
-				.buildAndExpand(savedVinho.getId()).toUri();
+				.buildAndExpand(savedWhisky.getId()).toUri();
 
 		return ResponseEntity.created(location).build();
 	}
